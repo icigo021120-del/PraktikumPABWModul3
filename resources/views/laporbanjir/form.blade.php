@@ -1,25 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
 
-    <title>LaporBanjir - BPBD Kabupaten Bandung</title>
-
-    <link rel="stylesheet" href="{{ asset('css/laporbanjir.css') }}">
-</head>
-
-<body>
-
-<div class="container">
-
-    <div class="card">
-
-        <div class="header">
-            <h1>LaporBanjir</h1>
-            <p>Pelaporan kejadian banjir Kabupaten Bandung</p>
-        </div>
-
+@section('content')
+    <div class="card" style="border: none; box-shadow: none; padding: 0;">
         <form action="{{ route('lapor-banjir.store') }}" method="POST">
             @csrf
 
@@ -33,7 +15,6 @@
                     value="{{ old('nama') }}"
                     required
                 >
-
                 @error('nama')
                     <small class="error">{{ $message }}</small>
                 @enderror
@@ -49,7 +30,6 @@
                     value="{{ old('kecamatan') }}"
                     required
                 >
-
                 @error('kecamatan')
                     <small class="error">{{ $message }}</small>
                 @enderror
@@ -65,17 +45,13 @@
                     value="{{ old('desa') }}"
                     required
                 >
-
                 @error('desa')
                     <small class="error">{{ $message }}</small>
                 @enderror
             </div>
 
             <div class="form-group">
-                <label for="tinggi_genangan">
-                    Tinggi Genangan Air (cm)
-                </label>
-
+                <label for="tinggi_genangan">Tinggi Genangan Air (cm)</label>
                 <input
                     type="number"
                     id="tinggi_genangan"
@@ -85,7 +61,6 @@
                     value="{{ old('tinggi_genangan') }}"
                     required
                 >
-
                 @error('tinggi_genangan')
                     <small class="error">{{ $message }}</small>
                 @enderror
@@ -94,14 +69,6 @@
             <button type="submit">
                 Kirim Laporan
             </button>
-
         </form>
-
     </div>
-
-</div>
-
-<script src="{{ asset('js/laporbanjir.js') }}"></script>
-
-</body>
-</html>
+@endsection

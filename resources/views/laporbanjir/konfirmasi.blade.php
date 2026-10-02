@@ -1,65 +1,34 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+@extends('layouts.app')
 
-    <title>Konfirmasi Laporan - LaporBanjir</title>
+@section('content')
+    <!-- Menggunakan komponen Blade <x-alert> -->
+    <x-alert>
+        Laporan banjir berhasil dikirim dan ditambahkan ke sistem!
+    </x-alert>
 
-    <link rel="stylesheet" href="{{ asset('css/laporbanjir.css') }}">
-</head>
-
-<body>
-
-<div class="container">
-
+    <h2>Detail Laporan yang Dikirim</h2>
+    
     <div class="card">
-
-        <div class="success-icon">
-            ✓
-        </div>
-
-        <div class="header">
-            <h1>Laporan Berhasil Dikirim</h1>
-            <p>Berikut adalah data laporan yang Anda kirimkan.</p>
-        </div>
-
-        <div class="report">
-
-            <div class="report-item">
-                <span>Nama Pelapor</span>
-                <strong>{{ $data['nama'] }}</strong>
-            </div>
-
-            <div class="report-item">
-                <span>Kecamatan</span>
-                <strong>{{ $data['kecamatan'] }}</strong>
-            </div>
-
-            <div class="report-item">
-                <span>Desa</span>
-                <strong>{{ $data['desa'] }}</strong>
-            </div>
-
-            <div class="report-item">
-                <span>Tinggi Genangan</span>
-                <strong>{{ $data['tinggi_genangan'] }} cm</strong>
-            </div>
-
-        </div>
-
-        <div class="notice">
-            Data laporan ini hanya ditampilkan sebagai konfirmasi
-            dan tidak disimpan secara permanen.
-        </div>
-
-        <a href="{{ route('lapor-banjir.form') }}" class="button">
-            Buat Laporan Baru
-        </a>
-
+        <p><strong>Nama Pelapor:</strong> {{ $data['nama'] ?? '-' }}</p>
+        <p><strong>Lokasi:</strong> Kec. {{ $data['kecamatan'] ?? '-' }}, Desa {{ $data['desa'] ?? '-' }}</p>
+        <p><strong>Tinggi Genangan:</strong> {{ $data['tinggi_genangan'] ?? 0 }} cm</p>
+        
+        <p>
+            <strong>Status:</strong> 
+            @if(isset($data['tinggi_genangan']))
+                @if($data['tinggi_genangan'] < 30)
+                    <span class="badge badge-waspada">Waspada</span>
+                @elseif($data['tinggi_genangan'] <= 70)
+                    <span class="badge badge-siaga">Siaga</span>
+                @else
+                    <span class="badge badge-awas">Awas</span>
+                @endif
+            @endif
+        </p>
     </div>
 
-</div>
-
-</body>
-</html>
+    <div style="margin-top: 20px;">
+        <a href="{{ route('lapor-banjir.form') }}"><button style="margin-right: 10px;">Kirim Laporan Lain</button></a>
+        <a href="{{ route('lapor-banjir.index') }}"><button style="background: #28a745;">Lihat Daftar Laporan</button></a>
+    </div>
+@endsection
